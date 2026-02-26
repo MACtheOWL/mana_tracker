@@ -13,28 +13,6 @@ class EffectsPage extends StatelessWidget {
 
     const double minLayoutWidth = 420;
 
-    String themeLabel() {
-      switch (state.themeMode) {
-        case ThemeMode.system:
-          return "Theme: System";
-        case ThemeMode.light:
-          return "Theme: Light";
-        case ThemeMode.dark:
-          return "Theme: Dark";
-      }
-    }
-
-    IconData themeIcon() {
-      switch (state.themeMode) {
-        case ThemeMode.system:
-          return Icons.brightness_auto;
-        case ThemeMode.light:
-          return Icons.light_mode;
-        case ThemeMode.dark:
-          return Icons.dark_mode;
-      }
-    }
-
     return Scaffold(
       backgroundColor: cs.surface,
       appBar: AppBar(
@@ -52,11 +30,11 @@ class EffectsPage extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  // THEME BUTTON (kept)
+                  // THEME BUTTON (Dark <-> Light only)
                   SizedBox(
                     width: double.infinity,
                     child: FilledButton.tonal(
-                      onPressed: state.cycleThemeMode,
+                      onPressed: state.toggleThemeMode,
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -64,10 +42,15 @@ class EffectsPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(themeIcon(), size: 18),
+                          Icon(
+                            state.themeMode == ThemeMode.dark
+                                ? Icons.dark_mode
+                                : Icons.light_mode,
+                            size: 18,
+                          ),
                           const SizedBox(width: 10),
                           Text(
-                            themeLabel(),
+                            state.themeMode == ThemeMode.dark ? "Dark Mode" : "Light Mode",
                             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w900),
                           ),
                         ],
@@ -82,7 +65,8 @@ class EffectsPage extends StatelessWidget {
                     context: context,
                     enabled: state.landDoublersEnabled,
                     count: state.landDoublersCount,
-                    onToggle: () => state.setLandDoublersEnabled(!state.landDoublersEnabled),
+                    onToggle: () =>
+                        state.setLandDoublersEnabled(!state.landDoublersEnabled),
                     onMinus: state.decLandDoublers,
                     onPlus: state.incLandDoublers,
                   ),
@@ -301,7 +285,10 @@ class EffectsPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w900)),
+                Text(
+                  title,
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w900),
+                ),
                 const SizedBox(height: 4),
                 Text(
                   subtitle,

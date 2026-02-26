@@ -5,23 +5,14 @@ import 'package:flutter/material.dart';
 enum ManaColor { w, u, b, r, g, c }
 
 class AppState extends ChangeNotifier {
-  // ---------------- THEME ----------------
-  ThemeMode themeMode = ThemeMode.system;
+// ---- THEME ----
+ThemeMode themeMode = ThemeMode.dark; // default dark
 
-  void cycleThemeMode() {
-    switch (themeMode) {
-      case ThemeMode.system:
-        themeMode = ThemeMode.light;
-        break;
-      case ThemeMode.light:
-        themeMode = ThemeMode.dark;
-        break;
-      case ThemeMode.dark:
-        themeMode = ThemeMode.system;
-        break;
-    }
-    notifyListeners();
-  }
+void toggleThemeMode() {
+  themeMode =
+      themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+  notifyListeners();
+}
 
   // ---------------- EFFECTS ----------------
   // 1) Land doublers
