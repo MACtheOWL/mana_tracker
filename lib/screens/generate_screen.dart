@@ -100,7 +100,7 @@ class GenerateScreen extends StatelessWidget {
       width: w,
       height: h,
       child: ElevatedButton(
-        onPressed: () => state.add(color, addAmount),
+        onPressed: () => state.addFromLandTap(color),
         style: ElevatedButton.styleFrom(
           backgroundColor: bg,
           foregroundColor: fg,
